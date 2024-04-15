@@ -1,0 +1,6 @@
+asgiref==3.8.1
+Django==5.0.4
+pytube==15.0.0
+six==1.16.0
+sqlparse==0.5.0
+whisper==1.1.10
