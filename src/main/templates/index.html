@@ -97,7 +97,48 @@
                 <button type="submit" class="btn-submit">Загрузить</button>
             </div>
         </form>
+        <div id="progress-container" style="display: none;">
+            <div id="progress-bar"></div>
+            <div id="progress-label"></div>
+        </div>
     </div>
 </body>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('#file_upload').submit(function(e){
+            e.preventDefault();
+            var formData = new FormData(this);
+            $.ajax({
+                url: "",
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                beforeSend: function() {
+                    $('#progress-container').show();
+                    $('#progress-label').text('Процесс транскрибирования начался. Пожалуйста, подождите...');
+                },
+                success: function(response){
+                    $('#progress-label').text('Процесс успешно завершен!');
+                    var blob = new Blob([response], { type: 'application/octet-stream' });
+                    var url = URL.createObjectURL(blob);
+                    var link = document.createElement('a');
+                    link.href = url;
+                    link.download = 'transcript.txt';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                },
+                error: function(xhr, status, error){
+                    // Handle error
+                    console.error(xhr.responseText);
+                    $('#progress-label').text('Что-то пошло не так... Попробуйте еще раз.');
+                }
+            });
+        });
+    });
+</script>
 
 </html>
