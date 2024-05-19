@@ -39,9 +39,11 @@
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             padding: 20px;
+            padding-top: 10px;
+            padding-bottom: 10px;
             max-width: 400px;
             width: 100%;
-            margin-top: 200px;
+            margin-top: 110px;
         }
     
         .form-group {
@@ -55,13 +57,18 @@
             margin-bottom: 5px;
         }
     
-        .form-group input[type="file"] {
+        .form-group input[type="file"], .form-group input[type="url"] {
             display: block;
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
+        }
+        
+        .form-group .model-options {
+            display: flex;
+            gap: 10px;
         }
     
         .form-group .btn-submit {
@@ -86,12 +93,29 @@
         <h1>LectuRec</h1>
     </div>
     <div class="container">
-        <h2>Загрузка файла</h2>
+        <h2>Загрузка записи</h2>
         <form id="file_upload" action="" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="form-group">
                 <label for="file">Загрузите аудиофайл</label>
-                <input type="file" name="file_upload" required>
+                <input type="file" name="file_upload" id="file_upload">
+            </div>
+            <div class="form-group">
+                <label for="youtube_link">Или введите ссылку на YouTube видео</label>
+                <input type="url" name="youtube_link" placeholder="https://www.youtube.com/watch?v=example" pattern="https://.*">
+            </div>
+            <div class="form-group">
+                <label>Модель для транскрибирования</label>
+                <div class="model-options">
+                    <label><input type="radio" name="model" value="tiny" checked> Tiny</label>
+                    <label><input type="radio" name="model" value="base"> Base</label>
+                    <label><input type="radio" name="model" value="small"> Small</label>
+                    <label><input type="radio" name="model" value="medium"> Medium</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="min_sentences">Количество предложений в абзаце</label>
+                <input type="number" name="min_sentences" id="min_sentences" min="1" value="3" required>
             </div>
             <div class="form-group">
                 <button type="submit" class="btn-submit">Загрузить</button>
