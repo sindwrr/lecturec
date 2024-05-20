@@ -27,12 +27,16 @@ def process_file(f):
 def process_youtube_link(link):
     yt = YouTube(link)
     audio_stream = yt.streams.filter(only_audio=True).first()
-    if not audio_stream:
-        raise Exception("No audio stream found in the YouTube video")
 
-    temp_dir = tempfile.gettempdir()
-    file_path = os.path.join(temp_dir, yt.title + ".mp4")
-    audio_stream.download(output_path=temp_dir, filename=yt.title + ".mp4")
+    temp_dir = "yt/"
+    if not os.path.exists(temp_dir):
+        os.makedirs(temp_dir)
+
+    # Sanitize file name to avoid issues with special characters
+    sanitized_title = "".join(char if char.isalnum() else "_" for char in yt.title)
+    file_path = os.path.join(temp_dir, sanitized_title + ".mp4")
+
+    audio_stream.download(output_path=temp_dir, filename=sanitized_title + ".mp4")
     return file_path
 
 
@@ -102,3 +106,7 @@ def index(request: HttpRequest):
             return response
 
     return render(request, "index.html")
+
+
+def info(request: HttpRequest):
+    return render(request, "info.html")

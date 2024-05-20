@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About LectuRec</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+        }
+
+        .header {
+            background-color: #007bff;
+            width: 100%;
+            padding: 10px 20px;
+            text-align: left;
+            position: fixed;
+            top: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            color: #fff;
+            font-size: 24px;
+            font-weight: normal;
+            margin: 0px;
+            padding-left: 10px;
+        }
+
+        .header a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 14px;
+            padding-right: 20px;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            max-width: 400px;
+            width: 100%;
+            margin-top: 110px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <a href="/"><h1>LectuRec β</h1></a>
+        <a href="/info">О сервисе</a>
+    </div>
+    <div class="container">
+        <h2>О сервисе</h2>
+        <p>LectuRec - это сервис для транскрибирования аудиозаписей лекций в текстовый файл, предназначенный для студентов и преподавателей, которым удобнее воспринимать информацию в текстовом виде.</p>
+        <p>Загруженный пользователем файл (или ссылка на YouTube-видео) отправляется на сервер, где модель машинного обучения распознает речь в записи и переводит ее в текст.</p>
+        <p>На выбор дается четыре конфигурации модели. Чем больше модель, тем лучше качество транскрибирования, но и тем дольше его процесс.</p>
+        <p>Сразу после завершения процесса транскрибирования файл удаляется с сервера, обеспечивая конфиденциальность данных. Пользователь по желанию может разрешить оставить полученный текстовый файл на сервере исключительно с целью обучения модели.</p>
+    </div>
+</body>
+
+</html>
