@@ -1,4 +1,5 @@
 import os
+import shutil
 import tempfile
 
 import spacy
@@ -7,7 +8,6 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 from pytube import YouTube
 
-# Load SpaCy models for English and Russian
 nlp_en = spacy.load("en_core_web_sm")
 nlp_ru = spacy.load("ru_core_news_sm")
 
@@ -32,7 +32,6 @@ def process_youtube_link(link):
     if not os.path.exists(temp_dir):
         os.makedirs(temp_dir)
 
-    # Sanitize file name to avoid issues with special characters
     sanitized_title = "".join(char if char.isalnum() else "_" for char in yt.title)
     file_path = os.path.join(temp_dir, sanitized_title + ".mp4")
 
@@ -82,10 +81,7 @@ def index(request: HttpRequest):
         model = whisper.load_model(model_choice)
         result = model.transcribe(filename)
 
-        # Determine the language from the transcribed text
         lang = "en" if all(ord(char) < 128 for char in result["text"]) else "ru"
-
-        # Segment the transcribed text into paragraphs
         segmented_text = segment_into_paragraphs(
             result["text"], lang=lang, min_sentences=min_sentences
         )
@@ -103,6 +99,13 @@ def index(request: HttpRequest):
             response["Content-Disposition"] = (
                 f"attachment; filename={os.path.basename(file_path)}"
             )
+
+            if os.path.exists("uploads"):
+                shutil.rmtree("uploads")
+            else:
+                shutil.rmtree("yt")
+            shutil.rmtree("transcripts")
+
             return response
 
     return render(request, "index.html")
